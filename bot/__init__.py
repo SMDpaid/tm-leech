@@ -116,6 +116,7 @@ rss_dict = {}
 AUTHORIZED_CHATS = set()
 SUDO_USERS = set()
 AS_DOC_USERS = set()
+EXTENTION_FILTER = set(['.torrent'])
 AS_MEDIA_USERS = set()
 if ospath.exists('authorized_chats.txt'):
     with open('authorized_chats.txt', 'r+') as f:
@@ -141,6 +142,14 @@ try:
         SUDO_USERS.add(int(chats))
 except:
     pass
+try:
+    fx = getConfig('EXTENTION_FILTER')
+    if len(fx) > 0:
+        fx = fx.split(' ')
+        for x in fx:
+            EXTENTION_FILTER.add(x.lower())
+except:
+    pass  
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     parent_id = getConfig('GDRIVE_FOLDER_ID')
