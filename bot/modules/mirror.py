@@ -560,18 +560,18 @@ qb_zip_mirror_handler = CommandHandler(BotCommands.QbZipMirrorCommand, qb_zip_mi
                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
 # For leech command
-leech_handler = CommandHandler(BotCommands.LeechCommand, leech,
+ leech_handler = CommandHandler(BotCommands.LeechCommand, leech,
                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-# unzip_leech_handler = CommandHandler(BotCommands.UnzipLeechCommand, unzip_leech,
-#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-# zip_leech_handler = CommandHandler(BotCommands.ZipLeechCommand, zip_leech,
-#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-# qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
-#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-# qb_unzip_leech_handler = CommandHandler(BotCommands.QbUnzipLeechCommand, qb_unzip_leech,
-#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-# qb_zip_leech_handler = CommandHandler(BotCommands.QbZipLeechCommand, qb_zip_leech,
-#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+ unzip_leech_handler = CommandHandler(BotCommands.UnzipLeechCommand, unzip_leech,
+                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+ zip_leech_handler = CommandHandler(BotCommands.ZipLeechCommand, zip_leech,
+                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+ qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
+                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+ qb_unzip_leech_handler = CommandHandler(BotCommands.QbUnzipLeechCommand, qb_unzip_leech,
+                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+ qb_zip_leech_handler = CommandHandler(BotCommands.QbZipLeechCommand, qb_zip_leech,
+                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
 # dispatcher.add_handler(mirror_handler)
 #dispatcher.add_handler(mirror_msg_handler)
@@ -581,8 +581,8 @@ leech_handler = CommandHandler(BotCommands.LeechCommand, leech,
 # dispatcher.add_handler(qb_unzip_mirror_handler)
 # dispatcher.add_handler(qb_zip_mirror_handler)
 dispatcher.add_handler(leech_handler)
-# dispatcher.add_handler(unzip_leech_handler)
-# dispatcher.add_handler(zip_leech_handler)
-# dispatcher.add_handler(qb_leech_handler)
-# dispatcher.add_handler(qb_unzip_leech_handler)
-# dispatcher.add_handler(qb_zip_leech_handler)
+dispatcher.add_handler(unzip_leech_handler)
+dispatcher.add_handler(zip_leech_handler)
+dispatcher.add_handler(qb_leech_handler)
+dispatcher.add_handler(qb_unzip_leech_handler)
+dispatcher.add_handler(qb_zip_leech_handler)
