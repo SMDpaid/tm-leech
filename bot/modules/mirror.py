@@ -562,16 +562,16 @@ qb_zip_mirror_handler = CommandHandler(BotCommands.QbZipMirrorCommand, qb_zip_mi
 # For leech command
 # leech_handler = CommandHandler(BotCommands.LeechCommand, leech,
 #                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-unzip_leech_handler = CommandHandler(BotCommands.UnzipLeechCommand, unzip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-zip_leech_handler = CommandHandler(BotCommands.ZipLeechCommand, zip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_unzip_leech_handler = CommandHandler(BotCommands.QbUnzipLeechCommand, qb_unzip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_zip_leech_handler = CommandHandler(BotCommands.QbZipLeechCommand, qb_zip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+# unzip_leech_handler = CommandHandler(BotCommands.UnzipLeechCommand, unzip_leech,
+#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+# zip_leech_handler = CommandHandler(BotCommands.ZipLeechCommand, zip_leech,
+#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+# qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
+#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+# qb_unzip_leech_handler = CommandHandler(BotCommands.QbUnzipLeechCommand, qb_unzip_leech,
+#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
+# qb_zip_leech_handler = CommandHandler(BotCommands.QbZipLeechCommand, qb_zip_leech,
+#                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
 # dispatcher.add_handler(mirror_handler)
 dispatcher.add_handler(mirror_msg_handler)
