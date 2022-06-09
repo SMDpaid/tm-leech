@@ -1,17 +1,18 @@
-import logging
-
+from logging import getLogger, ERROR
 from os import remove as osremove, walk, path as ospath, rename as osrename
 from time import time, sleep
 from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
-from threading import RLock, Thread
+from threading import RLock
+from pyrogram import Client, enums
 
-from bot import app, DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, LOG_LEECH, bot, BOT_PM
+from bot import DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, \
+                 EXTENTION_FILTER, app
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_video_resolution, get_path_size
-from bot.helper.telegram_helper.message_utils import deleteMessage
+from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
-LOGGER = logging.getLogger
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
+LOGGER = getLogger(__name__)
+getLogger("pyrogram").setLevel(ERROR)
 
 VIDEO_SUFFIXES = ("MKV", "MP4", "MOV", "WMV", "3GP", "MPG", "WEBM", "AVI", "FLV", "M4V", "GIF")
 AUDIO_SUFFIXES = ("MP3", "M4A", "M4B", "FLAC", "WAV", "AIF", "OGG", "AAC", "DTS", "MID", "AMR", "MKA")
@@ -62,23 +63,18 @@ class TgUploader:
         LOGGER.info(f"Leech Completed: {self.name}")
         self.__listener.onUploadComplete(None, size, self.__msgs_dict, self.__total_files, self.__corrupted, self.name)
 
-
     def __upload_file(self, up_path, file_, dirpath):
-        if self.__sent_msg == '':
-            self.__sent_msg = app.get_messages(self.__listener.message.chat.id, self.__listener.uid)
-        else:
-            self.__sent_msg = app.get_messages(self.__sent_msg.chat.id, self.__sent_msg.message_id)
         if CUSTOM_FILENAME is not None:
-            cap_mono = f"<b>{CUSTOM_FILENAME} {file_}</b>"
+            cap_mono = f"{CUSTOM_FILENAME} <code>{file_}</code>"
             file_ = f"{CUSTOM_FILENAME} {file_}"
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
         else:
-            cap_mono = f"<b>{file_}</b>"
-            pm_cap = f"<b>{file_}</b>"
+            cap_mono = f"<code>{file_}</code>"
         notMedia = False
         thumb = self.__thumb
+        self.__is_corrupted = False
         try:
             if not self.__as_doc:
                 duration = 0
@@ -100,49 +96,33 @@ class TgUploader:
                         new_path = ospath.join(dirpath, file_)
                         osrename(up_path, new_path)
                         up_path = new_path
-                    self.__sent_msg = self.__app.send_video(chat_id=LOG_LEECH,
-                                                         video=up_path,
-                                                         caption=cap_mono + "\n\n#KristyCloud",
-                                                         parse_mode="html",
-                                                         duration=duration,
-                                                         width=width,
-                                                         height=height,
-                                                         thumb=thumb,
-                                                         supports_streaming=True,
-                                                         disable_notification=True,
-                                                         progress=self.__upload_progress)
-                    try:
-                        app.send_video(self.__listener.message.from_user.id, video=self.__sent_msg.video.file_id, caption=pm_cap)
-                    except Exception as err:
-                        LOGGER(__name__).error(f"Failed to log to channel:\n{err}")
+                    self.__sent_msg = self.__sent_msg.reply_video(video=up_path,
+                                                                  quote=True,
+                                                                  caption=cap_mono,
+                                                                  duration=duration,
+                                                                  width=width,
+                                                                  height=height,
+                                                                  thumb=thumb,
+                                                                  supports_streaming=True,
+                                                                  disable_notification=True,
+                                                                  progress=self.__upload_progress)
                 elif file_.upper().endswith(AUDIO_SUFFIXES):
                     duration , artist, title = get_media_info(up_path)
-                    self.__sent_msg = self.__app.send_audio(chat_id=LOG_LEECH,
-                                                         audio=up_path,
-                                                         caption=cap_mono + "\n\n#KristyCloud",
-                                                         parse_mode="html",
-                                                         duration=duration,
-                                                         performer=artist,
-                                                         title=title,
-                                                         thumb=thumb,
-                                                         disable_notification=True,
-                                                         progress=self.__upload_progress)
-                    try:
-                        app.send_audio(self.__listener.message.from_user.id, audio=self.__sent_msg.audio.file_id, caption=pm_cap)
-                    except Exception as err:
-                        LOGGER(__name__).error(f"Failed to log to channel:\n{err}")
+                    self.__sent_msg = self.__sent_msg.reply_audio(audio=up_path,
+                                                                  quote=True,
+                                                                  caption=cap_mono,
+                                                                  duration=duration,
+                                                                  performer=artist,
+                                                                  title=title,
+                                                                  thumb=thumb,
+                                                                  disable_notification=True,
+                                                                  progress=self.__upload_progress)
                 elif file_.upper().endswith(IMAGE_SUFFIXES):
-                    self.__sent_msg = self.__app.send_photo(chat_id=LOG_LEECH,
-                                                         photo=up_path,
-                                                         caption=cap_mono + "\n\n#KristyCloud",
-                                                         parse_mode="html",
-                                                         disable_notification=True,
-                                                         progress=self.__upload_progress)
-                    try:
-                        app.send_photo(self.__listener.message.from_user.id, photo=self.__sent_msg.photo.file_id, caption=pm_cap)
-                        deleteMessage(bot, self.__sent_msg)
-                    except Exception as err:
-                        LOGGER(__name__).error(f"Failed to log to channel:\n{err}")
+                    self.__sent_msg = self.__sent_msg.reply_photo(photo=up_path,
+                                                                  quote=True,
+                                                                  caption=cap_mono,
+                                                                  disable_notification=True,
+                                                                  progress=self.__upload_progress)
                 else:
                     notMedia = True
             if self.__as_doc or notMedia:
@@ -152,27 +132,23 @@ class TgUploader:
                         if self.__thumb is None and thumb is not None and ospath.lexists(thumb):
                             osremove(thumb)
                         return
-                self.__sent_msg = self.__app.send_document(chat_id=LOG_LEECH,
-                                                        document=up_path,
-                                                        thumb=thumb,
-                                                        caption=cap_mono + "\n\n#KristyCloud",
-                                                        parse_mode="html",
-                                                        disable_notification=True,
-                                                        progress=self.__upload_progress)
-                try:
-                    app.send_document(self.__listener.message.from_user.id, document=self.__sent_msg.document.file_id, caption=pm_cap)
-                except Exception as err:
-                    LOGGER(__name__).error(f"Failed to log to channel:\n{err}")
+                self.__sent_msg = self.__sent_msg.reply_document(document=up_path,
+                                                                 quote=True,
+                                                                 thumb=thumb,
+                                                                 caption=cap_mono,
+                                                                 disable_notification=True,
+                                                                 progress=self.__upload_progress)
         except FloodWait as f:
-            LOGGER(__name__).warning(str(f))
-            sleep(f.x)
+            LOGGER.warning(str(f))
+            sleep(f.value)
         except RPCError as e:
-            LOGGER(__name__).error(f"RPCError: {e} File: {up_path}")
+            LOGGER.error(f"RPCError: {e} Path: {up_path}")
             self.__corrupted += 1
+            self.__is_corrupted = True
         except Exception as err:
-            LOGGER(__name__).exception(f"{err} File: {up_path}", exc_info=True)
+            LOGGER.error(f"{err} Path: {up_path}")
             self.__corrupted += 1
-            LOGGER(__name__).info("Corrupted +1 line 178")
+            self.__is_corrupted = True
         if self.__thumb is None and thumb is not None and ospath.lexists(thumb):
             osremove(thumb)
         if not self.__is_cancelled:
@@ -205,5 +181,5 @@ class TgUploader:
 
     def cancel_download(self):
         self.__is_cancelled = True
-        LOGGER(__name__).info(f"Cancelling Upload: {self.name}")
+        LOGGER.info(f"Cancelling Upload: {self.name}")
         self.__listener.onUploadError('your upload has been stopped!')
