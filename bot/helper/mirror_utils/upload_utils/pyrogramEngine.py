@@ -1,3 +1,4 @@
+import re
 from logging import getLogger, ERROR
 from os import remove as osremove, walk, path as ospath, rename as osrename
 from time import time, sleep
@@ -72,6 +73,11 @@ class TgUploader:
             up_path = new_path
         else:
             cap_mono = f"<b>{file_}</b>"
+
+        new_path = re.sub(r"(?:www)?\.?(?:1tamilmv|tamilblasters)\.?(?:com|in)?", "", up_path)
+        osrename(up_path, new_path)
+        up_path = new_path
+
         notMedia = False
         thumb = self.__thumb
         self.__is_corrupted = False
@@ -92,10 +98,11 @@ class TgUploader:
                     else:
                         width, height = get_video_resolution(up_path)
                     if not file_.upper().endswith(("MKV", "MP4")):
-                        file_ = ospath.splitext(file_)[0] + '.mp4'
+                        file_ = "@KaipullaVadiveluOffl" + ospath.splitext(file_)[0] + '.mp4'
                         new_path = ospath.join(dirpath, file_)
                         osrename(up_path, new_path)
                         up_path = new_path
+
                     self.__sent_msg = self.__sent_msg.reply_video(video=up_path,
                                                                   quote=True,
                                                                   caption=cap_mono,
