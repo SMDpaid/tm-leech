@@ -3,6 +3,7 @@ import logging
 
 from re import match, search, split as resplit
 from time import sleep, time
+import os
 from os import path as ospath, remove as osremove, listdir, walk
 from shutil import rmtree
 from threading import Thread
@@ -143,6 +144,10 @@ class MirrorListener:
                 path = f'{DOWNLOAD_DIR}{self.uid}/{name}'
         else:
             path = f'{DOWNLOAD_DIR}{self.uid}/{name}'
+        if "www.1TamilMV.cloud" in path or "www.tamilblasters.com" in path:
+            new_path = path.replace("www.1TamilMV.cloud", "@KaipullaVadiveluOffl").replace("www.tamilblasters.com", "@KaipullaVadiveluOffl")
+            os.rename(path, new_path)
+            path = new_path
         up_name = PurePath(path).name
         up_path = f'{DOWNLOAD_DIR}{self.uid}/{up_name}'
         size = get_path_size(f'{DOWNLOAD_DIR}{self.uid}')
