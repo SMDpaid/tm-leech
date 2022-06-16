@@ -548,7 +548,7 @@ def qb_zip_leech(update, context):
 #                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
 # For auto mirror
- mirror_msg_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, mirror, run_async=True)
+  mirror_msg_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, mirror, run_async=True)
 
 #For auto leech
 #leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
