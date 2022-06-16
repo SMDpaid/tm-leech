@@ -546,7 +546,7 @@ def qb_zip_leech(update, context):
 # mirror_handler = CommandHandler(BotCommands.MirrorCommand, mirror,
 #                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
-mirror_msg_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, mirror, run_async=True)
+qb_mirror_msg_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, mirror, run_async=True)
 # leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
 
 unzip_mirror_handler = CommandHandler(BotCommands.UnzipMirrorCommand, unzip_mirror,
