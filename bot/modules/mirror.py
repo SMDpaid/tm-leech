@@ -44,6 +44,7 @@ class MirrorListener:
     def __init__(self, bot, update: Update, isZip=False, extract=False, isQbit=False, isLeech=False, pswd=None, tag=None):
         self.bot = bot
         self.update = update
+        self.__listener = listener
         self.message: Message = update.message if update.message is not None else update.channel_post
         self.message.from_user = update.message.from_user if update.message is not None else update.channel_post.chat
         self.uid = self.message.message_id
@@ -53,6 +54,7 @@ class MirrorListener:
         self.isLeech = isLeech
         self.pswd = pswd
         self.tag = tag
+        self.__user_id = listener.message.from_user.id
         self.isPrivate = listener.message.chat.type in ['private', 'group']
 
     def clean(self):
