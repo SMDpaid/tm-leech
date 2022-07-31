@@ -429,17 +429,6 @@ def _mirror(bot: Bot, update: Update, isZip=False, extract=False, isQbit=False, 
         except IndexError:
             pass
 
-    if not is_url(link) and not is_magnet(link) and not ospath.exists(link):
-        help_msg = "<b>Send link along with command line:</b>"
-        help_msg += "\n<code>/command</code> {link} |newname pswd: mypassword [𝚣𝚒𝚙/𝚞𝚗𝚣𝚒𝚙]"
-        help_msg += "\n\n<b>By replying to link or file:</b>"
-        help_msg += "\n<code>/command</code> |newname pswd: mypassword [𝚣𝚒𝚙/𝚞𝚗𝚣𝚒𝚙]"
-        help_msg += "\n\n<b>Direct link authorization:</b>"
-        help_msg += "\n<code>/command</code> {link} |newname pswd: mypassword\nusername\npassword"
-        help_msg += "\n\n<b>Qbittorrent selection:</b>"
-        help_msg += "\n<code>/qbcommand</code> <b>s</b> {link} or by replying to {file}"
-        return sendMessage(help_msg, bot, update, chat_id=chat_id)
-
     gdtot_link = is_gdtot_link(link)
 
     if not is_mega_link(link) and not isQbit and not is_magnet(link) \
