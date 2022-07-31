@@ -507,79 +507,14 @@ def _mirror(bot: Bot, update: Update, isZip=False, extract=False, isQbit=False, 
         sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#Aria2", bot, update, chat_id=chat_id)
         Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener, name)).start()
 
-def mirror(update, context):
-    _mirror(context.bot, update)
-
-def unzip_mirror(update, context):
-    _mirror(context.bot, update, extract=True)
-
-def zip_mirror(update, context):
-    _mirror(context.bot, update, True)
-
-def qb_mirror(update, context):
-    _mirror(context.bot, update, isQbit=True)
-
-def qb_unzip_mirror(update, context):
-    _mirror(context.bot, update, extract=True, isQbit=True)
-
-def qb_zip_mirror(update, context):
-    _mirror(context.bot, update, True, isQbit=True)
-
-def leech(update, context):
-    _mirror(context.bot, update, isLeech=True)
-
-def unzip_leech(update, context):
-    _mirror(context.bot, update, extract=True, isLeech=True)
-
-def zip_leech(update, context):
-    _mirror(context.bot, update, True, isLeech=True)
 
 def qb_leech(update, context):
     _mirror(context.bot, update, isQbit=True, isLeech=True)
 
-def qb_unzip_leech(update, context):
-    _mirror(context.bot, update, extract=True, isQbit=True, isLeech=True)
+qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
 
-def qb_zip_leech(update, context):
-    _mirror(context.bot, update, True, isQbit=True, isLeech=True)
 
-# mirror_handler = CommandHandler(BotCommands.MirrorCommand, mirror,
-#                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-
-qb_mirror_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, mirror, run_async=True)
-leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
-
-unzip_mirror_handler = CommandHandler(BotCommands.UnzipMirrorCommand, unzip_mirror,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-zip_mirror_handler = CommandHandler(BotCommands.ZipMirrorCommand, zip_mirror,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_unzip_mirror_handler = CommandHandler(BotCommands.QbUnzipMirrorCommand, qb_unzip_mirror,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_zip_mirror_handler = CommandHandler(BotCommands.QbZipMirrorCommand, qb_zip_mirror,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-# leech_handler = CommandHandler(BotCommands.LeechCommand, leech,
+# qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
 #                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-unzip_leech_handler = CommandHandler(BotCommands.UnzipLeechCommand, unzip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-zip_leech_handler = CommandHandler(BotCommands.ZipLeechCommand, zip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_unzip_leech_handler = CommandHandler(BotCommands.QbUnzipLeechCommand, qb_unzip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
-qb_zip_leech_handler = CommandHandler(BotCommands.QbZipLeechCommand, qb_zip_leech,
-                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
-# dispatcher.add_handler(mirror_handler)
-# dispatcher.add_handler(mirror_msg_handler)
-dispatcher.add_handler(unzip_mirror_handler)
-dispatcher.add_handler(zip_mirror_handler)
-dispatcher.add_handler(qb_mirror_handler)
-dispatcher.add_handler(qb_unzip_mirror_handler)
-dispatcher.add_handler(qb_zip_mirror_handler)
-# dispatcher.add_handler(leech_handler)
-dispatcher.add_handler(unzip_leech_handler)
-dispatcher.add_handler(zip_leech_handler)
 dispatcher.add_handler(qb_leech_handler)
-dispatcher.add_handler(qb_unzip_leech_handler)
-dispatcher.add_handler(qb_zip_leech_handler)
