@@ -53,6 +53,7 @@ class MirrorListener:
         self.isLeech = isLeech
         self.pswd = pswd
         self.tag = tag
+        self.isPrivate = listener.message.chat.type in ['private', 'group']
 
     def clean(self):
         try:
