@@ -488,6 +488,14 @@ def _mirror(bot: Bot, update: Update, isZip=False, extract=False, isQbit=False, 
             sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#MEGA", bot, update, chat_id=chat_id)
             Thread(target=add_mega_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener)).start()
 
+    elif isQbit and (is_magnet(link) or ospath.exists(link)):
+        sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#qb", bot, update, chat_id=chat_id)
+        Thread(target=add_qb_torrent, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener, qbitsel)).start()
+
+    else:
+        sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#Aria2", bot, update, chat_id=chat_id)
+        Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener, name)).start()
+
 def leech(update, context):
     _mirror(context.bot, update, isLeech=True)
 
