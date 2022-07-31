@@ -511,7 +511,7 @@ def _mirror(bot: Bot, update: Update, isZip=False, extract=False, isQbit=False, 
 def qb_leech(update, context):
     _mirror(context.bot, update, isQbit=True, isLeech=True)
 
-qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
+qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, qb_leech, run_async=True)
 
 
 # qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
