@@ -508,13 +508,13 @@ def _mirror(bot: Bot, update: Update, isZip=False, extract=False, isQbit=False, 
         Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener, name)).start()
 
 
-def qb_leech(update, context):
-    _mirror(context.bot, update, isQbit=True, isLeech=True)
+def leech(update, context):
+    _mirror(context.bot, update, isLeech=True)
 
-qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, qb_leech, run_async=True)
+leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
 
 
 # qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
 #                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
-dispatcher.add_handler(qb_leech_handler)
+dispatcher.add_handler(leech_handler)
