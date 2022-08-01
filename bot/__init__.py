@@ -118,6 +118,7 @@ SUDO_USERS = set()
 AS_DOC_USERS = set()
 EXTENTION_FILTER = set(['.torrent'])
 AS_MEDIA_USERS = set()
+EXTENSION_FILTER = set()
 if ospath.exists('authorized_chats.txt'):
     with open('authorized_chats.txt', 'r+') as f:
         lines = f.readlines()
@@ -128,7 +129,9 @@ if ospath.exists('sudo_users.txt'):
         lines = f.readlines()
         for line in lines:
             SUDO_USERS.add(int(line.split()[0]))
-try:
+expect:
+    pass
+
     achats = getConfig('AUTHORIZED_CHATS')
     achats = achats.split(" ")
     for chats in achats:
