@@ -209,14 +209,14 @@ try:
         raise KeyError
 except KeyError:
     DB_URI = None
+tgBotMaxFileSize = 2097151000
 try:
     TG_SPLIT_SIZE = getConfig('TG_SPLIT_SIZE')
-    if len(TG_SPLIT_SIZE) == 0 or int(TG_SPLIT_SIZE) > 2097151000:
+    if len(TG_SPLIT_SIZE) == 0 or int(TG_SPLIT_SIZE) > tgBotMaxFileSize:
         raise KeyError
-    else:
-        TG_SPLIT_SIZE = int(TG_SPLIT_SIZE)
-except KeyError:
-    TG_SPLIT_SIZE = 2097151000
+    TG_SPLIT_SIZE = int(TG_SPLIT_SIZE)
+except:
+    TG_SPLIT_SIZE = tgBotMaxFileSize
 try:
     STATUS_LIMIT = getConfig('STATUS_LIMIT')
     if len(STATUS_LIMIT) == 0:
