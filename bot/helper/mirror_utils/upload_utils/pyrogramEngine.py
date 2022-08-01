@@ -67,22 +67,22 @@ class TgUploader:
     def __upload_file(self, up_path, file_, dirpath):
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
-            file_ = '@KaipullaVadiveluOffl' + file_.strip('-').strip('_')
+            file_ = '@KaipullaX1' + file_.strip('-').strip('_')
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
         else:
-            cap_mono = f"<b>{file_}</b>"
-            pm_cap = f"<b>{file_}</b>"
+            cap_mono = f"<b>{file_.rsplit('.', 1)[0]}</b>"
+            pm_cap = f"<b>{file_.rsplit('.', 1)[0]}</b>"
         if CUSTOM_FILENAME is not None:
-            cap_mono = f"{CUSTOM_FILENAME} <code>{file_}</code>"
-            file_ = f"{CUSTOM_FILENAME} {file_}"
+            cap_mono = f"{CUSTOM_FILENAME} <code>{file_.rsplit('.', 1)[0]}</code>"
+            file_ = f"{CUSTOM_FILENAME} {file_.rsplit('.', 1)[0]}"
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
         else:
-            cap_mono = f"<b>{file_}</b>"
-            pm_cap = f"<b>{file_}</b>"
+            cap_mono = f"<b>{file_.rsplit('.', 1)[0]}</b>"
+            pm_cap = f"<b>{file_.rsplit('.', 1)[0]}</b>"
         notMedia = False
         thumb = self.__thumb
         self.__is_corrupted = False
