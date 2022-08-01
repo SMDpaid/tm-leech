@@ -198,7 +198,7 @@ try:
         raise KeyError
 except KeyError:
     DB_URI = None
-tgBotMaxFileSize = 4194304000
+tgBotMaxFileSize = 2097151000
 try:
     TG_SPLIT_SIZE = getConfig('TG_SPLIT_SIZE')
     if len(TG_SPLIT_SIZE) == 0 or int(TG_SPLIT_SIZE) > tgBotMaxFileSize:
@@ -231,6 +231,7 @@ try:
 except:
     USER_SESSION_STRING = None
     rss_session = None
+LOGGER.info(f"TG_SPLIT_SIZE: {TG_SPLIT_SIZE}")
 try:
     STATUS_LIMIT = getConfig('STATUS_LIMIT')
     if len(STATUS_LIMIT) == 0:
