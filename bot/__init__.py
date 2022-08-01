@@ -131,7 +131,7 @@ if ospath.exists('sudo_users.txt'):
             SUDO_USERS.add(int(line.split()[0]))
 expect:
     pass
-
+try:
     achats = getConfig('AUTHORIZED_CHATS')
     achats = achats.split(" ")
     for chats in achats:
