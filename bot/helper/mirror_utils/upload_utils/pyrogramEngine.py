@@ -109,8 +109,8 @@ class TgUploader:
                         osrename(up_path, new_path)
                         up_path = new_path
                     if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = rss_session
-                else: usingclient = self.__app
-                self.__sent_msg = usingclient.send_document(chat_id=LOG_LEECH,
+                    else: usingclient = self.__app
+                    self.__sent_msg = usingclient.send_document(chat_id=LOG_LEECH,
                                                          video=up_path,
                                                          caption=cap_mono + "\n\n#PeterXCloud",
                                                          duration=duration,
