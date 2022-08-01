@@ -67,7 +67,7 @@ class TgUploader:
     def __upload_file(self, up_path, file_, dirpath):
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
-            file_ = '@KaipullaX1' + file_.strip('-').strip('_')
+            file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
@@ -75,8 +75,8 @@ class TgUploader:
             cap_mono = f"<b>{file_.rsplit('.', 1)[0]}</b>"
             pm_cap = f"<b>{file_.rsplit('.', 1)[0]}</b>"
         if CUSTOM_FILENAME is not None:
-            cap_mono = f"{CUSTOM_FILENAME} <code>{file_.rsplit('.', 1)[0]}</code>"
-            file_ = f"{CUSTOM_FILENAME} {file_.rsplit('.', 1)[0]}"
+            cap_mono = f"<b>{CUSTOM_FILENAME} {file_.rsplit('.', 1)[0]}</b>"
+            file_ = f"<b>{CUSTOM_FILENAME} {file_.rsplit('.', 1)[0]}</b>"
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
