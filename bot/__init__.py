@@ -129,7 +129,7 @@ if ospath.exists('sudo_users.txt'):
         lines = f.readlines()
         for line in lines:
             SUDO_USERS.add(int(line.split()[0]))
-expect:
+except:
     pass
 try:
     aid = getConfig('AUTHORIZED_CHATS')
