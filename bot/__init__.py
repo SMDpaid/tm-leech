@@ -1,4 +1,4 @@
-import logging
+import logging, INFO
 import socket
 import faulthandler
 import aria2p
