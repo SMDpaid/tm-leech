@@ -177,7 +177,7 @@ def split(path, size, file_, dirpath, split_size, start_time=0, i=1, inLoop=Fals
         split_size = ceil(size/parts)
     if file_.upper().endswith(VIDEO_SUFFIXES):
         base_name, extension = ospath.splitext(file_)
-        split_size = split_size - 2500000
+        split_size = split_size - 5000000 
         while i <= parts :
             parted_name = "{}.part{}{}".format(str(base_name), str(i).zfill(3), str(extension))
             out_path = ospath.join(dirpath, parted_name)
@@ -186,8 +186,8 @@ def split(path, size, file_, dirpath, split_size, start_time=0, i=1, inLoop=Fals
                             "-async", "1", "-strict", "-2", "-c", "copy", out_path])
             out_size = get_path_size(out_path)
             if out_size > 2097152000:
-                dif = out_size - 2097152000
-                split_size = split_size - dif + 2500000
+                dif = out_size - 4194304000
+                split_size = split_size - dif + 5000000
                 osremove(out_path)
                 return split(path, size, file_, dirpath, split_size, start_time, i, inLoop=True)
             lpd = get_media_info(out_path)[0]
