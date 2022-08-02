@@ -1,10 +1,12 @@
-import logging, INFO, basicConfig, error as log_error, info as log_info, warning as log_warning
+import logging
 import socket
 import faulthandler
 import aria2p
 import qbittorrentapi as qba
 import telegram.ext as tg
 
+
+from logging import getLogger, INFO, basicConfig, error as log_error, info as log_info, warning as log_warning
 from os import remove as osremove, path as ospath, environ
 from requests import get as rget
 from json import loads as jsnloads
@@ -24,7 +26,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
                     level=logging.INFO)
 
-LOGGER = getLogger(__name__)
+LOGGER = logging.getLogger
 
 load_dotenv('config.env', override=True)
 
