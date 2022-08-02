@@ -496,13 +496,13 @@ def _mirror(bot: Bot, update: Update, isZip=False, extract=False, isQbit=False, 
         sendtextlog(f"<b>User: {uname}</b>\n<b>User ID:</b> <code>/warn {uid}</code>\n\n<b>Link Sended:</b>\n<code>{link}</code>\n\n#Aria2", bot, update, chat_id=chat_id)
         Thread(target=add_aria2c_download, args=(link, f'{DOWNLOAD_DIR}{listener.uid}/', listener, name)).start()
 
-def leech(update, context):
+def qb_leech(update, context):
     _mirror(context.bot, update, isLeech=True)
 
-qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
+qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, qb_leech, run_async=True)
 
 
-qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, leech,
+qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
-dispatcher.add_handler(leech_handler)
+dispatcher.add_handler(qb_leech_handler)
