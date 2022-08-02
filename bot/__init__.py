@@ -232,7 +232,6 @@ try:
 except:
     USER_SESSION_STRING = None
     rss_session = None
-LOGGER.info(f"TG_SPLIT_SIZE: {TG_SPLIT_SIZE}")
 try:
     STATUS_LIMIT = getConfig('STATUS_LIMIT')
     if len(STATUS_LIMIT) == 0:
