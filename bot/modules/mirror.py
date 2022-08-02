@@ -502,7 +502,7 @@ def leech(update, context):
 qb_leech_handler = MessageHandler(CustomFilters.mirror_torrent_and_magnets & Filters.chat_type, leech, run_async=True)
 
 
-qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, qb_leech,
+qb_leech_handler = CommandHandler(BotCommands.QbLeechCommand, leech,
                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user, run_async=True)
 
-dispatcher.add_handler(qb_leech_handler)
+dispatcher.add_handler(leech_handler)
