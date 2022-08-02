@@ -21,11 +21,11 @@ socket.setdefaulttimeout(600)
 
 botStartTime = time()
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
                     level=logging.INFO)
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = getLogger(__name__)
 
 load_dotenv('config.env', override=True)
 
