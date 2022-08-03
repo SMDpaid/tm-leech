@@ -25,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
                     level=logging.INFO)
 
-LOGGER = getLogger(__name__)
+LOGGER = logging.getLogger()
 
 load_dotenv('config.env', override=True)
 
