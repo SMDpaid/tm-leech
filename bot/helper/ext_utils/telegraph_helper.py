@@ -27,7 +27,7 @@ class TelegraphHelper:
 			author_url=self.author_url
 		)
 		self.access_token = self.telegraph.get_access_token()
-		LOGGER(__name__).info(f"Creating TELEGRAPH Account using  '{self.short_name}' name")
+		LOGGER.info(f"Creating TELEGRAPH Account using  '{self.short_name}' name")
 
 	def create_page(self, title, content):
 		try:
