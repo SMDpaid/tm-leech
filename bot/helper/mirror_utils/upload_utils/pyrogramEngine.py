@@ -67,7 +67,7 @@ class TgUploader:
     def __upload_file(self, up_path, file_, dirpath):
         if file_.startswith('www'):  
             file_ = ' '.join(file_.split()[1:])
-            file_ = '@KaipullaX1 -' + file_.strip('-').strip('_')
+            file_ = '@Central_Links -' + file_.strip('-').strip('_')
             new_path = ospath.join(dirpath, file_)
             osrename(up_path, new_path)
             up_path = new_path
