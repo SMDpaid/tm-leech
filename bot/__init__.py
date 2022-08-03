@@ -5,6 +5,7 @@ import aria2p
 import qbittorrentapi as qba
 import telegram.ext as tg
 
+from logging import getLogger
 from os import remove as osremove, path as ospath, environ
 from requests import get as rget
 from json import loads as jsnloads
