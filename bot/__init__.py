@@ -25,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
                     level=logging.INFO)
 
-LOGGER = logging.getLogger()
+LOGGER = logging.getLogger(__name__)
 
 load_dotenv('config.env', override=True)
 
@@ -168,10 +168,10 @@ try:
     LOG_CHANNEL_LINK1 = getConfig('LOG_CHANNEL_LINK1')
     LOG_CHANNEL_LINK2 = getConfig('LOG_CHANNEL_LINK2')
 except KeyError as e:
-    LOGGER(__name__).error("Check the Main Variables")
+    LOGGER.error("Check the Main Variables")
     exit(1)
 
-LOGGER(__name__).info("Generating BOT_STRING_SESSION")
+LOGGER.info("Generating BOT_STRING_SESSION")
 app = Client('pyrogram', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN, no_updates=True)
 
 def aria2c_init():
