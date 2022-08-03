@@ -25,7 +25,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
                     level=logging.INFO)
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger
 
 load_dotenv('config.env', override=True)
 
@@ -168,10 +168,10 @@ try:
     LOG_CHANNEL_LINK1 = getConfig('LOG_CHANNEL_LINK1')
     LOG_CHANNEL_LINK2 = getConfig('LOG_CHANNEL_LINK2')
 except KeyError as e:
-    LOGGER.error("Check the Main Variables")
+    LOGGER(__name__).error("Check the Main Variables")
     exit(1)
 
-LOGGER.info("Generating BOT_STRING_SESSION")
+LOGGER(__name__).info("Generating BOT_STRING_SESSION")
 app = Client('pyrogram', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN, no_updates=True)
 
 def aria2c_init():
@@ -212,22 +212,22 @@ try:
         raise KeyError
     rss_session = Client(name='rss_session', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, session_string=USER_SESSION_STRING, parse_mode=enums.ParseMode.HTML, no_updates=True)
     if not rss_session:
-        LOGGER.error("Cannot initialized User Session. Please regenerate USER_SESSION_STRING")
+        LOGGER(__name__).error("Cannot initialized User Session. Please regenerate USER_SESSION_STRING")
     else:
         rss_session.start()
         if (rss_session.get_me()).is_premium:
             if not LEECH_LOG:
-                LOGGER.error("You must set LEECH_LOG for uploads. Eiting now.")
+                LOGGER(__name__).error("You must set LEECH_LOG for uploads. Eiting now.")
                 try: rss_session.send_message(OWNER_ID, "You must set LEECH_LOG for uploads. Bot is closing. Bye.")
-                except Exception as e: LOGGER.exception(e)
+                except Exception as e: LOGGER(__name__).exception(e)
                 rss_session.stop()
                 app.stop()
                 exit(1)
             TG_SPLIT_SIZE = 4194304000
-            LOGGER.info("Premium user detected. Upload limit is 4GB now.")
+            LOGGER(__name__).info("Premium user detected. Upload limit is 4GB now.")
         elif (not DB_URI) or (not RSS_CHAT_ID):
             rss_session.stop()
-            LOGGER.info(f"Not using rss. if you want to use fill RSS_CHAT_ID and DB_URI variables.")
+            LOGGER(__name__).info(f"Not using rss. if you want to use fill RSS_CHAT_ID and DB_URI variables.")
 except:
     USER_SESSION_STRING = None
     rss_session = None
