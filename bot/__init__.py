@@ -229,6 +229,7 @@ try:
             rss_session.stop()
             LOGGER(__name__).info(f"Not using rss. if you want to use fill RSS_CHAT_ID and DB_URI variables.")
 except:
+    LOGGER(__name__).info("USER_SESSION_STRING: not found ")
     USER_SESSION_STRING = None
     rss_session = None
 LOGGER(__name__).info(f"TG_SPLIT_SIZE: {TG_SPLIT_SIZE}")
